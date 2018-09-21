@@ -1,0 +1,11 @@
+#ifndef Matrice_h
+#define Matrice_h
+
+bool IS_DEBUG_MODE = false;
+char ssid[] = "SSID";
+char password[] = "PASSWORD";
+
+String FBaccessToken = "FB_ACCESS_TOKEN";
+String FBpageId = "FB_PAGE_ID";
+
+#endif
