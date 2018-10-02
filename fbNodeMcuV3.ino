@@ -6,9 +6,10 @@
 #include "Variables.h"
 #include "Matrice.h"
 #include "Utils.h"
+#include "HttpClient.h"
 //#include "IRremote.h"
 
-WiFiClientSecure client;
+HttpClient http;
 
 long checkDueTime;
 int checkDelay = 3000;
@@ -60,70 +61,19 @@ void setup()
 
 String getFacebookFan()
 {
-
   String fan = "";
-  String headers = "";
-  String body = "";
-  bool finishedHeaders = false;
-  bool currentLineIsBlank = true;
-  bool gotResponse = false;
-  long now;
-  char host[] = "graph.facebook.com";
+  String host = "graph.facebook.com";
+  String URL = "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken;
+  String body = http.get("graph.facebook.com", "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken);
 
-  if (client.connect(host, 443)) {
-    debug("Client connected");
-
-    String URL = "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken;
-
-    debug("Facebook API uri : " + URL);
-
-    client.println("GET " + URL + " HTTP/1.1");
-    client.print("Host: "); client.println(host);
-    client.println("User-Agent: arduino/1.0");
-    client.println("");
-
-    now = millis();
-    // checking the timeout
-    while (millis() - now < 1500) {
-      while (client.available()) {
-        char c = client.read();
-
-        if (finishedHeaders) {
-          body = body + c;
-        } else {
-          if (currentLineIsBlank && c == '\n') {
-            finishedHeaders = true;
-          }
-          else {
-            headers = headers + c;
-          }
-        }
-
-        if (c == '\n') {
-          currentLineIsBlank = true;
-        } else if (c != '\r') {
-          currentLineIsBlank = false;
-        }
-
-        //marking we got a response
-        gotResponse = true;
-
-      }
-
-      if (gotResponse) {
-        DynamicJsonBuffer jsonBuffer;
-        JsonObject& root = jsonBuffer.parseObject(body);
-        if (root.success()) {
-          fan = root["fan_count"].as<String>();
-        } else {
-          Serial.println("failed to parse JSON");
-        }
-
-        break;
-      }
-    }
+  DynamicJsonBuffer jsonBuffer;
+  JsonObject& root = jsonBuffer.parseObject(body);
+  if (root.success()) {
+    fan = root["fan_count"].as<String>();
+  } else {
+    Serial.println("failed to parse JSON");
   }
-
+  
   return fan;
 }
 

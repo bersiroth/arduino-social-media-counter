@@ -8,10 +8,10 @@ class HttpClient
 {
   public:
   HttpClient();
-  String get(String url, String host);
+  String get(String host, String url);
 
   private:
-  WifiClientSecure _client;
+  WiFiClientSecure _client;
 };
 
 #endif
