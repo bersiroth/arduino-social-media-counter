@@ -25,8 +25,8 @@ Matrice matrice = Matrice(&matrix);
 
 //IRrecv irrecv(receiver);     // create instance of 'irrecv'
 //decode_results results;      // create instance of 'decode_results'
-
-void debug(String message, bool back = true)
+template<typename T>
+void debug(const T& message, bool back = true)
 {
   if (IS_DEBUG_MODE) {
     if (back) {
