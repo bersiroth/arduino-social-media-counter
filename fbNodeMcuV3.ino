@@ -5,6 +5,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "Variables.h"
 #include "Matrice.h"
+#include "Utils.h"
 //#include "IRremote.h"
 
 WiFiClientSecure client;
@@ -25,17 +26,6 @@ Matrice matrice = Matrice(&matrix);
 
 //IRrecv irrecv(receiver);     // create instance of 'irrecv'
 //decode_results results;      // create instance of 'decode_results'
-template<typename T>
-void debug(const T& message, bool back = true)
-{
-  if (IS_DEBUG_MODE) {
-    if (back) {
-      Serial.println(message);
-    } else {
-      Serial.print(message);
-    }
-  }
-}
 
 void setup()
 {
