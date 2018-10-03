@@ -8,7 +8,7 @@ class HttpClient
 {
   public:
   HttpClient();
-  String get(String host, String url);
+  String get(const char* host, String url);
 
   private:
   WiFiClientSecure _client;

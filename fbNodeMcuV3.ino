@@ -62,9 +62,9 @@ void setup()
 String getFacebookFan()
 {
   String fan = "";
-  String host = "graph.facebook.com";
+  char* host = "graph.facebook.com";
   String URL = "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken;
-  String body = http.get("graph.facebook.com", "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken);
+  String body = http.get(host, URL);
 
   DynamicJsonBuffer jsonBuffer;
   JsonObject& root = jsonBuffer.parseObject(body);
