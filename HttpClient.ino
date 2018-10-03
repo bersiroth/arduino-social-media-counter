@@ -1,3 +1,5 @@
+#include "Utils.h"
+
 HttpClient::HttpClient()
 {
 }
@@ -14,10 +16,9 @@ String HttpClient::get(const char* host, String url)
   while(this->_client.connected())
   {
     String line = this->_client.readStringUntil('\n');
-
     if(line == "\r")
     {
-      // debug("Headers received");
+      debug("Headers received");
       break;
     }
   }

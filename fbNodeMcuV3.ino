@@ -12,7 +12,7 @@
 HttpClient http;
 
 long checkDueTime;
-int checkDelay = 3000;
+int checkDelay = 30000;
 
 //const int receiver = 11; // Signal Pin of IR receiver to Arduino Digital Pin 11
 
@@ -71,46 +71,66 @@ String getFacebookFan()
   if (root.success()) {
     fan = root["fan_count"].as<String>();
   } else {
-    Serial.println("failed to parse JSON");
+    Serial.println("failed to parse JSON Facebook");
   }
   
   return fan;
 }
 
-void facebookScreen()
+String getTwitterFollower()
 {
-    // String facebookFan = getFacebookFan();
-    String facebookFan = "14";
-    int fbLength = static_cast<int>(facebookFan.length());
+  String follower = "";
+  char* host = "cdn.syndication.twimg.com";
+  String URL = "/widgets/followbutton/info.json?screen_names=linkvalue";
+  String body = http.get(host, URL);
 
-    if (facebookFan != "") {
-      debug("Nb facebook fan : " + facebookFan);
-      debug("First integer : " + facebookFan[0] - '0');
+  DynamicJsonBuffer jsonBuffer;
+  JsonArray& root = jsonBuffer.parseArray(body);
+  debug(body);
+  if (root.success()) {
+    follower = root[0]["followers_count"].as<String>();
+  } else {
+    Serial.println("failed to parse JSON Twitter");
+  }
+  
+  return follower;
+}
 
-      size_t number_of_zero = 4 - fbLength;
+void display(String follower, Logo logo)
+{
+  int followerLength = static_cast<int>(follower.length());
 
-      for (int i = 0; i < number_of_zero; i++) {
-        facebookFan = "0" + facebookFan;
-      }
+  if (follower != "") {
+    debug("Nb follower : " + follower);
+    debug("First integer : " + follower[0] - '0');
 
-      debug("String convert for display : " + facebookFan);
+    size_t number_of_zero = 4 - followerLength;
 
-      for (int i = 0; i < 4; i++) {
-        matrice.displayNumber(matrice.allNumbers[facebookFan[i] - '0'], i+1);
-      }
-
-      matrice.displayLogo(matrice.FbLogo, matrice.FbLogoColors);
-      matrix.show();
-    } else {
-      debug("Error facebook fan.");
+    for (int i = 0; i < number_of_zero; i++) {
+      follower = "0" + follower;
     }
+
+    debug("String convert for display : " + follower);
+
+    for (int i = 0; i < 4; i++) {
+      matrice.displayNumber(matrice.allNumbers[follower[i] - '0'], i+1);
+    }
+
+    matrice.displayLogo(logo);
+    matrix.show();
+  } else {
+    debug("Error follower.");
+  }
 }
 
 void loop() {
   long now = millis();
   if (now >= checkDueTime) {
     debug("---------");
-    facebookScreen();
+    display(getFacebookFan(), Logo::facebook);
+    delay(2000);
+    debug("---------");
+    display(getTwitterFollower(), Logo::twitter);
     debug("---------");
     checkDueTime = now + checkDelay;
   }
