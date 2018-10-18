@@ -16,9 +16,6 @@ int state = 0;
 
 HttpClient http;
 
-/*long checkDueTime;*/
-/*int checkDelay = 30000;*/
-
 //const int receiver = 11; // Signal Pin of IR receiver to Arduino Digital Pin 11
 
 const int brocheLEDs = 3;
@@ -148,17 +145,8 @@ void display(String follower, Logo logo)
 }
 
 void loop() {
-  /*long now = millis();*/
   now = millis();
-  /*if (now >= checkDueTime) {*/
-    /*debug("---------");*/
-    /*display(getFacebookFan(), Logo::facebook);*/
-    /*delay(2000);*/
-    /*debug("---------");*/
-    /*display(getTwitterFollower(), Logo::twitter);*/
-    /*debug("---------");*/
-    /*checkDueTime = now + checkDelay;*/
-  /*}*/
+
   if(now - previous_millis >= interval) {
     previous_millis = now;
     switch (state) {
