@@ -3,6 +3,12 @@
 
 #include <Adafruit_NeoPixel.h>
 
+enum Logo {
+  facebook,
+  twitter,
+  youtube
+};
+
 class Matrice
 {
   public:
@@ -71,9 +77,12 @@ class Matrice
   }};
 
   void setPixelColorCustom(int column, int row, int green, int blue, int red);
-  void displayLogo(byte logo[][10], byte color[][3]);
+  void displayLogo(Logo logo);
   void displayNumber(byte number[][4], int emplacement);
   void displayLetter(byte letter[][5], int emplacement);
+
+  private:
+  void _displayLogo(byte logo[][10], byte color[][3]);
 };
 
 #endif

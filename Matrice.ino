@@ -113,7 +113,22 @@ void Matrice::setPixelColorCustom(int column, int row, int green, int blue, int 
   this->matrix->setPixelColor(nbPixel, green, blue, red);
 }
 
-void Matrice::displayLogo(byte logo[][10], byte color[][3])
+void Matrice::displayLogo(Logo logo)
+{
+  switch (logo){
+    case Logo::facebook:
+      this->_displayLogo(this->FbLogo, this->FbLogoColors);
+      break;
+    case Logo::youtube:
+      this->_displayLogo(this->YtLogo, this->YtLogoColors);
+      break;
+    case Logo::twitter:
+      this->_displayLogo(this->TwitterLogo, this->TwitterLogoColors);
+      break;
+  }
+}
+
+void Matrice::_displayLogo(byte logo[][10], byte color[][3])
 {
   for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 10; j++) {
