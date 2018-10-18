@@ -8,4 +8,7 @@ char password[] = "PASSWORD";
 String FBaccessToken = "FB_ACCESS_TOKEN";
 String FBpageId = "FB_PAGE_ID";
 
+String YtaccessToken = "YT_ACCESS_TOKEN";
+String YTpageId = "YT_PAGE_ID";
+
 #endif

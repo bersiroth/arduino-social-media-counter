@@ -66,7 +66,6 @@ void setup()
 
 String getFacebookFan()
 {
-  /*return "14";*/
   String fan = "";
   char* host = "graph.facebook.com";
   String URL = "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken;
@@ -166,8 +165,11 @@ void loop() {
       case 0: state++;
               display(getFacebookFan(), Logo::facebook);
               break;
-      case 1: state = 0;
+      case 1: state++;
               display(getTwitterFollower(), Logo::twitter);
+              break;
+      case 2: state = 0;
+              display(getYoutubeSub(), Logo::youtube);
               break;
     }
   }
