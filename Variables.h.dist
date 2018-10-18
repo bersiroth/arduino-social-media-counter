@@ -1,5 +1,5 @@
-#ifndef Matrice_h
-#define Matrice_h
+#ifndef Variables_h
+#define Variables_h
 
 bool IS_DEBUG_MODE = false;
 char ssid[] = "SSID";
