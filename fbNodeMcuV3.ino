@@ -77,6 +77,26 @@ String getFacebookFan()
   return fan;
 }
 
+
+String getYoutubeSub()
+{
+  String subs = "";
+  char* host = "www.googleapis.com";
+  String URL = "/youtube/v3/channels?id=" + YTpageId + "&part=statistics&key=" + YtaccessToken;
+  String body = http.get(host, URL);
+
+  DynamicJsonBuffer jsonBuffer;
+  debug(body);
+  JsonObject& root = jsonBuffer.parseObject(body);
+  if (root.success()) {
+    subs = root["items"][0]["statistics"]["subscriberCount"].as<String>();
+  } else {
+    Serial.println("failed to parse JSON youtube");
+  }
+  
+  return subs;
+}
+
 String getTwitterFollower()
 {
   String follower = "";
@@ -86,7 +106,6 @@ String getTwitterFollower()
 
   DynamicJsonBuffer jsonBuffer;
   JsonArray& root = jsonBuffer.parseArray(body);
-  debug(body);
   if (root.success()) {
     follower = root[0]["followers_count"].as<String>();
   } else {
@@ -119,7 +138,7 @@ void display(String follower, Logo logo)
     matrice.displayLogo(logo);
     matrix.show();
   } else {
-    debug("Error follower.");
+    debug("Error display");
   }
 }
 
@@ -131,7 +150,9 @@ void loop() {
     delay(2000);
     debug("---------");
     display(getTwitterFollower(), Logo::twitter);
+    delay(2000);
     debug("---------");
+    display(getYoutubeSub(), Logo::youtube);
     checkDueTime = now + checkDelay;
   }
 }

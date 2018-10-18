@@ -23,5 +23,17 @@ String HttpClient::get(const char* host, String url)
     }
   }
 
-  return this->_client.readStringUntil('\n');
+  String json = "";
+  while(this->_client.connected())
+  {
+    String line = this->_client.readStringUntil('\n');
+    if(line == "\r" || line == "\n" || line == "")
+    {
+      debug("Json received");
+      break;
+    }
+    json = json + line;
+  }
+
+  return json;
 }
