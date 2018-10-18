@@ -9,10 +9,15 @@
 #include "HttpClient.h"
 //#include "IRremote.h"
 
+unsigned long now = 0;
+unsigned long previous_millis = 0;
+int interval = 10000;
+int state = 0;
+
 HttpClient http;
 
-long checkDueTime;
-int checkDelay = 30000;
+/*long checkDueTime;*/
+/*int checkDelay = 30000;*/
 
 //const int receiver = 11; // Signal Pin of IR receiver to Arduino Digital Pin 11
 
@@ -61,6 +66,7 @@ void setup()
 
 String getFacebookFan()
 {
+  /*return "14";*/
   String fan = "";
   char* host = "graph.facebook.com";
   String URL = "/v2.12/" + FBpageId + "?fields=fan_count&access_token=" + FBaccessToken;
@@ -143,16 +149,26 @@ void display(String follower, Logo logo)
 }
 
 void loop() {
-  long now = millis();
-  if (now >= checkDueTime) {
-    debug("---------");
-    display(getFacebookFan(), Logo::facebook);
-    delay(2000);
-    debug("---------");
-    display(getTwitterFollower(), Logo::twitter);
-    delay(2000);
-    debug("---------");
-    display(getYoutubeSub(), Logo::youtube);
-    checkDueTime = now + checkDelay;
+  /*long now = millis();*/
+  now = millis();
+  /*if (now >= checkDueTime) {*/
+    /*debug("---------");*/
+    /*display(getFacebookFan(), Logo::facebook);*/
+    /*delay(2000);*/
+    /*debug("---------");*/
+    /*display(getTwitterFollower(), Logo::twitter);*/
+    /*debug("---------");*/
+    /*checkDueTime = now + checkDelay;*/
+  /*}*/
+  if(now - previous_millis >= interval) {
+    previous_millis = now;
+    switch (state) {
+      case 0: state++;
+              display(getFacebookFan(), Logo::facebook);
+              break;
+      case 1: state = 0;
+              display(getTwitterFollower(), Logo::twitter);
+              break;
+    }
   }
 }
