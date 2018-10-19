@@ -162,41 +162,55 @@ void display(String follower, Logo logo)
   }
 }
 
+void inc_state()
+{
+  state = state != 2 ? state + 1 : 0;
+}
+
+void dec_state()
+{
+  state = state != 0 ? state- 1 : 2;
+}
+
 void screen() {
+  timer.stop();
+  timer.reset();
   switch (state) {
-    case 0: state++;
-            display(facebookFan, Logo::facebook);
+    case 0: display(facebookFan, Logo::facebook);
             break;
-    case 1: state++;
-            display(twitterFollower, Logo::twitter);
+    case 1: display(twitterFollower, Logo::twitter);
             break;
-    case 2: state = 0;
-            display(youtubeSub, Logo::youtube);
+    case 2: display(youtubeSub, Logo::youtube);
             break;
   }
+  timer.start();
 }
 
 void ir_controller() {
   serialPrintUint64(results.value, HEX);
+  timer.stop();
+  timer.reset();
   switch (results.value) {
-    case 0xFFC23D: timer.repeatReset();
-                   state =  state != 2 ? state + 1 : 0;
+    case 0xFFC23D: inc_state();
                    break;
-    case 0xFF22DD: timer.repeatReset();
-                   state =  state != 0 ? state - 1 : 2;
+    case 0xFF22DD: dec_state();
                    break;
   }
-
   screen();
+  timer.start();
   irrecv.resume();
 }
 
 void loop() {
   if (fetchingDataTimer.repeat()) {
+    timer.stop();
+    timer.reset();
     fetchData();
+    timer.start();
   }
 
   if (timer.repeat()) {
+    inc_state();
     screen();
   }
 
