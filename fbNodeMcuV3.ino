@@ -57,7 +57,7 @@ void setup()
   debug("WiFi connected");
   debug("IP address: ");
   IPAddress ip = WiFi.localIP();
-  // debug(ip);
+  debug(ip);
 
 }
 
@@ -122,6 +122,8 @@ void display(String follower, Logo logo)
   int followerLength = static_cast<int>(follower.length());
 
   if (follower != "") {
+    matrice.displayLogo(logo);
+    
     debug("Nb follower : " + follower);
     debug("First integer : " + follower[0] - '0');
 
@@ -137,7 +139,6 @@ void display(String follower, Logo logo)
       matrice.displayNumber(matrice.allNumbers[follower[i] - '0'], i+1);
     }
 
-    matrice.displayLogo(logo);
     matrix.show();
   } else {
     debug("Error display");

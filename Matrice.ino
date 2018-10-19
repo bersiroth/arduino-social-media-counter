@@ -130,39 +130,44 @@ void Matrice::displayLogo(Logo logo)
 
 void Matrice::_displayLogo(byte logo[][10], byte color[][3])
 {
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j < 10; j++) {
-      this->setPixelColorCustom(j + 1, i + 1, color[logo[i][j]][0], color[logo[i][j]][1], color[logo[i][j]][2]);
+  for (int a = -10; a <= 0; a++) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 10; j++) {
+        int row =  i + 1 + a;
+        if (row >= 1) {
+          this->setPixelColorCustom(j + 1, row, color[logo[i][j]][0], color[logo[i][j]][1], color[logo[i][j]][2]);
+        }
+      }
     }
+    delay(35);
+    this->matrix->show();
   }
 }
 
 void Matrice::displayNumber(byte number[][4], int emplacement)
-{
-  for (int i = 0; i < 6; i++) {
-    for (int j = 0; j < 4; j++) {
-      int color;
-      if (number[i][j] == 1) {
-        color = 255;
-      } else {
-        color = 0;
+{ 
+  for (int a = -7; a <= 0; a++) {
+    for (int i = 0; i < 7; i++) {
+      for (int j = 0; j < 5; j++) {        
+        this->setPixelColorCustom(j + 10 + ((4 + 1) * (emplacement - 1)) + 2, 1, 0, 0, 0);
       }
-      this->setPixelColorCustom(j + 10 + ((4 + 1) * (emplacement - 1)) + 2, i + 2, color, color, color);
     }
-  }
-}
-
-void Matrice::displayLetter(byte letter[][5], int emplacement)
-{
-  for (int i = 0; i < 6; i++) {
-    for (int j = 0; j < 5; j++) {
-      int color;
-      if (letter[i][j] == 1) {
-        color = 255;
-      } else {
-        color = 0;
+    for (int i = 0; i < 6; i++) {
+      for (int j = 0; j < 4; j++) {
+        int color;
+        if (number[i][j] == 1) {
+          color = 255;
+        } else {
+          color = 0;
+        }
+        
+        int row = i + 2 + a;
+        if (row >= 1) {
+          this->setPixelColorCustom(j + 10 + ((4 + 1) * (emplacement - 1)) + 2, row, color, color, color);
+        }
       }
-      this->setPixelColorCustom(j + 10 + ((5 + 1) * (emplacement - 1)) + 2, i + 2, color, color, color);
     }
+    delay(35);
+    this->matrix->show();
   }
 }
