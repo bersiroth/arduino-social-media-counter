@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "Adafruit ESP8266": "1.0.0",
+    "Adafruit GFX Library": "1.2.2",
+    "Adafruit NeoMatrix": "1.1.2",
+    "Adafruit MeoPixel": "1.1.2",
+    "ArduinoJson": "5.13.1",
+    "Neotimer": "1.1.6",
+    "IRremoteESP8266": "2.5.1"
+  }
+}
