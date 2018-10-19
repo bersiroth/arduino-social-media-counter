@@ -14,4 +14,10 @@ void debug(const T& message, bool back = true)
   }
 }
 
+void debug_print_time(unsigned long time_millis){
+  debug("Time: ", false);
+  debug(time_millis/1000, false);
+  debug("s - ", false);
+}
+
 #endif

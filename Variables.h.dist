@@ -1,5 +1,5 @@
-#ifndef Matrice_h
-#define Matrice_h
+#ifndef Variables_h
+#define Variables_h
 
 bool IS_DEBUG_MODE = false;
 char ssid[] = "SSID";
@@ -7,5 +7,8 @@ char password[] = "PASSWORD";
 
 String FBaccessToken = "FB_ACCESS_TOKEN";
 String FBpageId = "FB_PAGE_ID";
+
+String YtaccessToken = "YT_ACCESS_TOKEN";
+String YTpageId = "YT_PAGE_ID";
 
 #endif
