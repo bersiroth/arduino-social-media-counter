@@ -2,8 +2,6 @@
 #include <ESP8266WiFi.h>
 //Include the SSL client
 #include <WiFiClientSecure.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_NeoMatrix.h>
 #include <Adafruit_NeoPixel.h>
 #include "Variables.h"
 #include "Matrice.h"
