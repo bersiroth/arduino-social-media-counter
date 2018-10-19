@@ -2,6 +2,8 @@
 #include <ESP8266WiFi.h>
 //Include the SSL client
 #include <WiFiClientSecure.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_NeoMatrix.h>
 #include <Adafruit_NeoPixel.h>
 #include "Variables.h"
 #include "Matrice.h"
@@ -12,7 +14,7 @@
 HttpClient http;
 
 long checkDueTime;
-int checkDelay = 30000;
+int checkDelay = 4000;
 
 //const int receiver = 11; // Signal Pin of IR receiver to Arduino Digital Pin 11
 
@@ -55,7 +57,7 @@ void setup()
   debug("WiFi connected");
   debug("IP address: ");
   IPAddress ip = WiFi.localIP();
-  // debug(ip);
+  debug(ip);
 
 }
 
@@ -115,11 +117,26 @@ String getTwitterFollower()
   return follower;
 }
 
+uint32_t Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return matrix.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return matrix.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return matrix.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+}
+
 void display(String follower, Logo logo)
 {
   int followerLength = static_cast<int>(follower.length());
 
   if (follower != "") {
+    matrice.displayLogo(logo);
+    
     debug("Nb follower : " + follower);
     debug("First integer : " + follower[0] - '0');
 
@@ -135,7 +152,6 @@ void display(String follower, Logo logo)
       matrice.displayNumber(matrice.allNumbers[follower[i] - '0'], i+1);
     }
 
-    matrice.displayLogo(logo);
     matrix.show();
   } else {
     debug("Error display");
