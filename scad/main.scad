@@ -1,6 +1,7 @@
 $fn = 20;
 
-screw_size = 3.2;
+screw_depth = 17;
+screw_diameter = 3.2;
 
 width = 330;
 height = 90;
@@ -22,16 +23,29 @@ difference() {
 		cube([width - border, depth, height - border]);
 }
 
-//translate([border, border, border]) cube([4, depth - border, 4]);
-difference() {
-	intersection() {
-		translate([border, depth - border, border])
-			rotate([90, 90, 0])
-				cylinder(d1=9, d2=7, h=30);
-		translate([border, border, border])
-			cube([4, depth - border, 4]);
-	}
-	translate([border + 1.6, depth - border, border + 1.6])
-		rotate([90,90,0])
-			cylinder(d=screw_size, h=10);
+module supportAndScrewHole(){ 
+    difference() {
+        // suport for screw hole
+        intersection() {
+            rotate([-90, 0, 0])
+                cylinder(d=8, h=depth - border * 2);
+            cube([4, depth - border, 4]);
+        }
+        // screw hole
+        translate([1.6, depth - border, 1.6])
+            rotate([90,0,0])
+                cylinder(d1=screw_diameter, d2=screw_diameter / 1.5, h=screw_depth);
+    }
 }
+
+translate([border, border, border]) 
+    supportAndScrewHole();
+translate([width - border, border, border]) 
+    rotate([0, -90, 0])
+        supportAndScrewHole();
+translate([border, border, height - border]) 
+    rotate([0, 90, 0])
+        supportAndScrewHole();
+translate([width - border, border, height - border])
+    rotate([0, 180, 0])
+        supportAndScrewHole();
