@@ -1,3 +1,5 @@
+include <constant.scad>;
+
 module box(){ 
     difference() {
         // box with round corner
@@ -48,3 +50,5 @@ module box(){
         rotate([0, 0, 180])
             supportAndScrewHole();
 }
+
+box();

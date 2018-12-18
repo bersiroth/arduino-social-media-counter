@@ -1,3 +1,5 @@
+include <constant.scad>;
+
 module grid() {
     // grid border
     difference() {
@@ -29,3 +31,5 @@ module grid() {
         translate([border + matrice_border + a + 9.125 * (a + 1), border, border]) 
             cube([diffuser_border, height, diffuser_depth]);
 }
+
+grid();
