@@ -13,9 +13,11 @@ depth = 40;
 
 diffuser_depth = 10;
 diffuser_border = 1;
+diffuser_corner = 10;
 diffuser_nb_vertical_square = 8;
 diffuser_nb_horizontal_square = diffuser_nb_vertical_square * 4;
-diffuser_square_height = 
-    ((height-(diffuser_border*2))-(diffuser_nb_vertical_square-1*diffuser_border)-(matrice_border*2))/diffuser_nb_vertical_square;
-diffuser_square_width = 
-    ((width-(diffuser_border*2))-(diffuser_nb_horizontal_square-1*diffuser_border)-(matrice_border*2))/diffuser_nb_horizontal_square;
+
+ function calculSquareSize(size, nb_square) = (( size - (diffuser_border * 2 )) - (nb_square - 1 * diffuser_border) - (matrice_border * 2)) / nb_square;
+ 
+diffuser_square_height = calculSquareSize(height, diffuser_nb_vertical_square);
+diffuser_square_width = calculSquareSize(width, diffuser_nb_horizontal_square);
