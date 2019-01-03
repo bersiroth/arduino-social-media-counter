@@ -1,6 +1,8 @@
-include <constant.scad>;
-include <box.scad>;
-include <grid.scad>;
+use <constant.scad>;
+use <box.scad>;
+use <grid.scad>;
+use <back.scad>;
 
-box();
-grid();
+color( "SkyBlue", 1.0 ) render() box();
+color( "DarkGreen", 1.0 ) render() grid();
+color( "FireBrick", 1.0 ) render() back();
