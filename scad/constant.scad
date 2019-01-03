@@ -21,3 +21,8 @@ diffuser_nb_horizontal_square = diffuser_nb_vertical_square * 4;
  
 diffuser_square_height = calculSquareSize(height, diffuser_nb_vertical_square);
 diffuser_square_width = calculSquareSize(width, diffuser_nb_horizontal_square);
+
+back_center_text = "center text";
+back_center_size = 20;
+back_bottom_text = "bottom text";
+back_bottom_size = 8;
